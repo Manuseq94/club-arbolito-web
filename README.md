@@ -2,7 +2,7 @@
 
 Plataforma web dinámica y responsiva desarrollada para la gestión institucional y deportiva del Club Atlético Arbolito. Diseñada para mantener a los socios informados, gestionar disciplinas y facilitar la asociación de nuevos miembros.
 
-![Demostración del sitio](screenshots/gif_pagina.gif)
+![Demostración del sitio](screenshots/gif_inicio.gif)
 
 ## 🚀 Características Principales
 
