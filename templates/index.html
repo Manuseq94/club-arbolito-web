@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Club Atlético Arbolito{% endblock %}
+
+{% block content %}
+    <section class="w-full h-[80vh] relative overflow-hidden bg-black">
+        
+        <div id="hero-carrusel" class="flex w-full h-full transition-transform duration-500 ease-in-out" style="transform: translateX(0%);">
+            {% for item in carrusel %}
+                <div class="hero-slide min-w-full h-full relative">
+                    <img src="{{ item.imagen.url }}" alt="{{ item.titulo }}" class="w-full h-full object-cover">
+                    
+                    <div class="absolute inset-0 bg-black/40 z-10"></div>
+                    
+                    {% if item.titulo %}
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 md:p-12 z-20">
+                            <h2 class="text-white text-3xl md:text-5xl font-extrabold drop-shadow-lg tracking-tight">{{ item.titulo }}</h2>
+                        </div>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <div class="min-w-full h-full flex items-center justify-center bg-gray-800">
+                    <p class="text-gray-400">No hay imágenes de portada disponibles.</p>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="absolute inset-0 flex flex-col justify-center items-center z-40 pointer-events-none p-4 text-center">
+            
+            <p class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white drop-shadow-[0_4px_4px_rgba(0,0,0,1)] mb-2">
+                <span class="text-arbolito-amarillo">CLUB ATLÉTICO</span> ARBOLITO
+            </p>
+            
+            <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-tight drop-shadow-[0_5px_10px_rgba(0,0,0,0.9)] leading-tight">
+                Más que un club,
+                <span class="block text-xl md:text-3xl lg:text-4xl text-arbolito-amarillo mt-1 drop-shadow-[0_5px_10px_rgba(0,0,0,0.9)]">
+                     una historia compartida.
+                </span>
+            </h2>
+
+        </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const track = document.getElementById('hero-carrusel');
+                const slidesCount = track.children.length;
+                
+                if (slidesCount > 1) {
+                    let currentSlide = 0;
+                    
+                    setInterval(() => {
+                        // Calcula la siguiente foto
+                        currentSlide = (currentSlide + 1) % slidesCount;
+                        
+                        // Mueve la "tira" completa de fotos hacia la izquierda
+                        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                    }, 5000); 
+                }
+            });
+        </script>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            <aside class="col-span-1 bg-white dark:bg-gray-800 p-6 shadow-sm rounded-lg">
+                <h2 class="text-xl font-bold text-arbolito-verde dark:text-arbolito-amarillo mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">Noticias del Club</h2>
+                
+                <div class="space-y-4">
+                    {% for noticia in noticias_recientes %}
+                        
+                        <a href="{% url 'institucion:noticia_detalle' noticia.id %}" class="block border-b border-gray-100 dark:border-gray-700 pb-3 last:border-0 group cursor-pointer">
+                            <article>
+                                <span class="text-xs font-semibold text-arbolito-verde uppercase tracking-wider">{{ noticia.categoria.nombre }}</span>
+                                
+                                <h4 class="font-bold text-gray-800 dark:text-gray-200 leading-tight mt-1 group-hover:text-arbolito-verde transition-colors duration-200">
+                                    {{ noticia.titulo }}
+                                </h4>
+                                
+                                <p class="text-xs text-gray-500 mt-2">{{ noticia.fecha_publicacion|date:"d M Y" }}</p>
+                            </article>
+                        </a>
+                        
+                    {% empty %}
+                        <p class="text-sm text-gray-500">No hay noticias recientes.</p>
+                    {% endfor %}
+                </div>
+            </aside>
+
+            <main class="col-span-1 md:col-span-2">
+                
+                <div class="flex justify-between items-end border-b pb-2 border-gray-200 dark:border-gray-700 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Noticias principales</h2>
+                    <a href="{% url 'institucion:noticias_list' %}" class="text-[10px] md:text-xs font-bold text-arbolito-verde uppercase hover:underline tracking-wider">
+                        Ver todas
+                    </a>
+                </div>
+
+                <div class="space-y-10">
+                    {% if noticias_destacadas %}
+                        {% for noticia in noticias_destacadas %}
+                            
+                            <article class="group">
+                                <a href="{% url 'institucion:noticia_detalle' noticia.id %}" class="block">
+                                    
+                                    <div class="relative overflow-hidden rounded-xl bg-gray-200 aspect-[16/9] mb-4 shadow-sm">
+                                        {% if noticia.imagen_portada %}
+                                            <img src="{{ noticia.imagen_portada.url }}" alt="{{ noticia.titulo }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                        {% else %}
+                                            <div class="w-full h-full bg-gray-800 flex items-center justify-center">
+                                                <span class="text-gray-500">Sin imagen</span>
+                                            </div>
+                                        {% endif %}
+                                        
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-5 md:p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                                            <p class="text-white text-sm md:text-lg font-medium drop-shadow-md line-clamp-2 md:line-clamp-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                                                {{ noticia.bajada }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="px-1">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-arbolito-amarillo text-arbolito-verde text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">
+                                                {{ noticia.categoria.nombre }}
+                                            </span>
+                                        </div>
+                                        
+                                        <h3 class="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-gray-800 dark:text-gray-100 group-hover:text-arbolito-verde transition-colors duration-200 leading-snug mt-3">
+                                            {{ noticia.titulo }}
+                                        </h3>
+                                    </div>
+                                </a>
+                            </article>
+
+                        {% endfor %}
+                    {% else %}
+                        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 text-center">
+                            <p class="text-gray-500 font-medium">Aún no se ha marcado ninguna noticia como destacada.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </main>
+
+            <aside class="col-span-1 bg-white dark:bg-gray-800 p-6 shadow-sm rounded-lg flex flex-col h-full">
+                <h2 class="text-xl font-bold text-arbolito-verde dark:text-arbolito-amarillo mb-6 border-b pb-2 border-gray-200 dark:border-gray-700">
+                    Próximos Eventos
+                </h2>
+    
+                <div class="space-y-4 flex-grow">
+                    {% for partido in proximos_partidos %}
+                        <div class="border border-gray-100 dark:border-gray-600 rounded-lg p-5 text-center bg-gray-50 dark:bg-gray-900 shadow-sm relative transition-all hover:shadow-md">
+                            
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-white px-3 py-1 rounded-full mb-4 inline-block" style="background-color: {{ partido.disciplina.color_hex|default:'#2F855A' }};">
+                                {{ partido.disciplina.nombre }}
+                            </span>
+                
+                            <div class="flex justify-between items-center mb-3 w-full">
+                                {% if partido.es_local %}
+                                    <span class="font-bold text-sm dark:text-white text-right flex-1 leading-tight">ARBOLITO</span>
+                                    <span class="text-[10px] text-gray-400 font-bold px-3 shrink-0">VS</span>
+                                    <span class="font-bold text-sm dark:text-white text-left flex-1 leading-tight">{{ partido.rival|upper }}</span>
+                                {% else %}
+                                    <span class="font-bold text-sm dark:text-white text-right flex-1 leading-tight">{{ partido.rival|upper }}</span>
+                                    <span class="text-[10px] text-gray-400 font-bold px-3 shrink-0">VS</span>
+                                    <span class="font-bold text-sm dark:text-white text-left flex-1 leading-tight">ARBOLITO</span>
+                                {% endif %}
+                            </div>
+                
+                            <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 mt-4">
+                                {{ partido.fecha_hora|date:"D d/m - H:i" }} hs
+                            </p>
+                            
+                            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 flex items-center justify-center gap-1">
+                                <svg class="w-3 h-3 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                                {{ partido.lugar }}
+                            </p>
+                            
+                            {% if partido.link_entradas %}
+                                <a href="{{ partido.link_entradas }}" target="_blank" class="mt-4 block w-full bg-arbolito-verde text-white text-xs font-bold py-2 rounded hover:bg-opacity-90 transition-all">
+                                    COMPRAR ENTRADAS
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% empty %}
+                        <div class="bg-gray-50 dark:bg-gray-900 border border-dashed border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center mt-2">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">No hay eventos programados para esta semana.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </aside>
+
+        </div>
+    </section>
+    
+    <style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+{% endblock %}

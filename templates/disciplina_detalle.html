@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ disciplina.nombre }} - Club Arbolito{% endblock %}
+
+{% block content %}
+{% if disciplina.imagen_portada %}
+    <header class="w-full h-80 relative flex items-center justify-center shadow-inner overflow-hidden">
+        <img src="{{ disciplina.imagen_portada.url }}" alt="{{ disciplina.nombre }}" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        
+        <h1 class="relative text-5xl md:text-6xl font-extrabold text-white drop-shadow-2xl uppercase tracking-wider z-10">
+            {{ disciplina.nombre }}
+        </h1>
+    </header>
+{% else %}
+    <header class="w-full py-16 text-center shadow-inner" style="background-color: {{ disciplina.color_hex }};">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white drop-shadow-md uppercase tracking-wider">
+            {{ disciplina.nombre }}
+        </h1>
+    </header>
+{% endif %}
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    {% if disciplina.descripcion %}
+        <section class="mb-16 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Sobre {{ disciplina.nombre }}</h2>
+            <div class="prose prose-lg dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
+                {{ disciplina.descripcion|linebreaks }}
+            </div>
+        </section>
+    {% endif %}
+
+    {% if disciplina.imagenes.all %}
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 border-b-2 border-gray-200 dark:border-gray-700 pb-2 inline-block">Galería de Imágenes</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {% for foto in disciplina.imagenes.all %}
+                    <div class="bg-white dark:bg-gray-800 p-2 shadow-md rounded-lg transform hover:scale-105 transition-transform duration-300">
+                        <img src="{{ foto.imagen.url }}" alt="{{ foto.epigrafe|default:disciplina.nombre }}" class="w-full h-full object-cover rounded aspect-square">
+                        
+                        {% if foto.epigrafe %}
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 px-1 italic">{{ foto.epigrafe }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 pt-16 border-t border-gray-200 dark:border-gray-700">
+        
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 border-b-2 border-arbolito-verde pb-2 inline-block">Fixture / Próximos Partidos</h2>
+            
+            <div class="space-y-4">
+                {% for partido in proximos_partidos %}
+                    <div class="bg-white dark:bg-gray-800 border-l-4 border-gray-200 dark:border-gray-700 shadow-sm rounded-r-lg p-4 flex flex-col sm:flex-row justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" style="border-left-color: {{ disciplina.color_hex }};">
+                        
+                        <div class="text-center sm:text-left mb-3 sm:mb-0">
+                            <p class="text-sm text-gray-500 dark:text-gray-400 font-semibold">{{ partido.fecha_hora|date:"l d/m - H:i" }} hs</p>
+                            <p class="text-xs text-gray-400">📍 {{ partido.lugar }}</p>
+                        </div>
+
+                        <div class="flex items-center space-x-4 font-bold text-lg dark:text-gray-100">
+                            <span class="{% if partido.es_local %}text-arbolito-verde dark:text-arbolito-amarillo{% endif %}">
+                                {% if partido.es_local %}ARBOLITO{% else %}{{ partido.rival|upper }}{% endif %}
+                            </span>
+                            <span class="text-xs bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded text-gray-500 dark:text-gray-300">VS</span>
+                            <span class="{% if not partido.es_local %}text-arbolito-verde dark:text-arbolito-amarillo{% endif %}">
+                                {% if not partido.es_local %}ARBOLITO{% else %}{{ partido.rival|upper }}{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg text-center border border-dashed border-gray-300 dark:border-gray-600">
+                        <p class="text-gray-500 dark:text-gray-400">No hay partidos programados próximamente.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 border-b-2 border-gray-400 pb-2 inline-block">Últimos Resultados</h2>
+            
+            <div class="space-y-4 opacity-90">
+                {% for partido in resultados %}
+                    <div class="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 flex justify-between items-center text-sm shadow-sm">
+                        <span class="text-gray-500 font-medium">{{ partido.fecha_hora|date:"d/m/Y" }}</span>
+                        
+                        <div class="font-bold dark:text-gray-300 text-base flex items-center">
+                            {% if partido.es_local %}
+                                <span class="tracking-wide">Arbolito</span>
+                                {% if partido.resultado_arbolito is not None and partido.resultado_rival is not None %}
+                                    <span class="mx-3 px-2 py-0.5 bg-arbolito-verde text-white rounded font-extrabold">{{ partido.resultado_arbolito }} - {{ partido.resultado_rival }}</span>
+                                {% else %}
+                                    <span class="font-normal text-gray-400 mx-3">vs</span>
+                                {% endif %}
+                                <span class="tracking-wide text-gray-600 dark:text-gray-400">{{ partido.rival }}</span>
+                            {% else %}
+                                <span class="tracking-wide text-gray-600 dark:text-gray-400">{{ partido.rival }}</span>
+                                {% if partido.resultado_arbolito is not None and partido.resultado_rival is not None %}
+                                    <span class="mx-3 px-2 py-0.5 bg-gray-800 dark:bg-gray-700 text-white rounded font-extrabold">{{ partido.resultado_rival }} - {{ partido.resultado_arbolito }}</span>
+                                {% else %}
+                                    <span class="font-normal text-gray-400 mx-3">vs</span>
+                                {% endif %}
+                                <span class="tracking-wide">Arbolito</span>
+                            {% endif %}
+                        </div>
+                        
+                        <span class="text-[10px] uppercase font-bold bg-gray-300 dark:bg-gray-700 px-2 py-1 rounded text-gray-600 dark:text-gray-400 tracking-wider">Final</span>
+                    </div>
+                {% empty %}
+                    <p class="text-gray-500 dark:text-gray-400 text-sm text-center py-4">No hay registros de partidos anteriores.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+    </div>
+</main>
+{% endblock %}

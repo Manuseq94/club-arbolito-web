@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ noticia.titulo }} - Club Arbolito{% endblock %}
+
+{% block content %}
+<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <header class="mb-8 text-center">
+        <span class="text-sm font-bold text-arbolito-verde uppercase tracking-widest">{{ noticia.categoria.nombre }}</span>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mt-4 mb-4">{{ noticia.titulo }}</h1>
+        <p class="text-gray-500 dark:text-gray-400 font-medium text-lg">{{ noticia.fecha_publicacion|date:"l j \d\e F, Y" }}</p>
+    </header>
+
+    {% if noticia.imagen_portada %}
+        <div class="w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-lg mb-10">
+            <img src="{{ noticia.imagen_portada.url }}" alt="{{ noticia.titulo }}" class="w-full h-full object-cover">
+        </div>
+    {% endif %}
+
+    <article class="prose prose-lg dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
+        <p class="font-semibold text-xl mb-6">{{ noticia.bajada|linebreaks }}</p>
+        <div class="mt-6">
+            {{ noticia.cuerpo|linebreaks }}
+        </div>
+    </article>
+
+    <div class="mt-12 text-center border-t border-gray-200 dark:border-gray-700 pt-8">
+        <a href="{% url 'institucion:inicio' %}" class="inline-block bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-bold py-3 px-6 rounded transition-colors">
+            ← Volver al Inicio
+        </a>
+    </div>
+</main>
+{% endblock %}

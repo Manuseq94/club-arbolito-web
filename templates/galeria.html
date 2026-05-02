@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Galería Multimedia - Club Arbolito{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <header class="mb-12 text-center border-b border-gray-200 dark:border-gray-700 pb-6">
+        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white uppercase tracking-wider">
+            Galería del Club
+        </h1>
+        <p class="mt-4 text-gray-500 dark:text-gray-400">Momentos, eventos y la pasión de nuestra gente.</p>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for item in items %}
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700 transform hover:scale-[1.02] transition-transform duration-300 flex flex-col">
+                
+                <div class="w-full bg-gray-200 dark:bg-gray-900 aspect-video relative">
+                    {% if item.video %}
+                        <video controls class="w-full h-full object-cover">
+                            <source src="{{ item.video.url }}" type="video/mp4">
+                            Tu navegador no soporta videos.
+                        </video>
+                    {% elif item.imagen %}
+                        <img src="{{ item.imagen.url }}" alt="{{ item.descripcion }}" class="w-full h-full object-cover">
+                    {% else %}
+                        <div class="flex items-center justify-center w-full h-full text-gray-400">Sin archivo</div>
+                    {% endif %}
+                </div>
+
+                <div class="p-4 flex-grow">
+                    <p class="text-gray-700 dark:text-gray-300 text-sm italic">
+                        "{{ item.descripcion }}"
+                    </p>
+                </div>
+                
+            </div>
+        {% empty %}
+            <div class="col-span-full text-center py-12 text-gray-500">
+                La galería está vacía. ¡Pronto subiremos nuevo contenido!
+            </div>
+        {% endfor %}
+    </div>
+
+</main>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Información para Socios - Club Atlético Arbolito{% endblock %}
+
+{% block content %}
+<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    
+    <header class="mb-12 border-b border-gray-200 dark:border-gray-700 pb-8">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tight mb-4">
+            Información para Socios y Socias
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400">
+            Todo lo que necesitás saber sobre tus derechos, obligaciones y beneficios como parte vital de nuestra institución.
+        </p>
+    </header>
+
+    <div class="space-y-12">
+        
+        <section>
+            <h2 class="text-2xl font-bold text-arbolito-verde dark:text-arbolito-amarillo mb-6">Tus Beneficios</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 md:p-8 shadow-sm border border-gray-100 dark:border-gray-700">
+                <ul class="space-y-4 text-gray-700 dark:text-gray-300">
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-arbolito-verde mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span><strong>Descuentos en entradas:</strong> Beneficio exclusivo para todos los partidos locales del club (sujeto a disponibilidad y fase del torneo).</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-arbolito-verde mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span><strong>Alquiler de espacios:</strong> Importante bonificación en el alquiler del salón y predio para tus eventos.</span>
+                    </li>
+                    <li class="flex items-start opacity-70">
+                    <svg class="w-6 h-6 text-gray-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    <span class="text-gray-500 dark:text-gray-400 italic">
+                        Más beneficios a confirmar por la Comisión Directiva...
+                    </span>
+                </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-arbolito-verde dark:text-arbolito-amarillo mb-6">Derechos y Obligaciones</h2>
+            <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 text-base leading-relaxed space-y-4">
+                <p>Ser socio del Club Atlético Arbolito implica un compromiso con los valores de respeto, camaradería y esfuerzo mutuo. Todos los socios plenos mayores de 18 años, con una antigüedad mínima de un (1) año y cuota al día, tienen derecho a participar con voz y voto en las Asambleas Ordinarias y Extraordinarias.</p>
+                <p>Es obligación estatutaria mantener el pago de la cuota social al día. El atraso de más de tres (3) meses consecutivos inhabilitará al socio para utilizar las instalaciones o gozar de los beneficios institucionales hasta regularizar su situación.</p>
+                <p>Recomendamos siempre tener tu carnet digital o físico a mano al ingresar al club para facilitar la labor de nuestro personal.</p>
+            </div>
+        </section>
+
+    </div>
+</main>
+{% endblock %}

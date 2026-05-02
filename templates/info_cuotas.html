@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Cuota Social - Club Atlético Arbolito{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    
+    <header class="mb-16 text-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+            Tu Cuota Social
+        </h1>
+        <div class="w-24 h-1 bg-arbolito-verde mx-auto rounded mb-6"></div>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            En nuestro club todos tiramos para el mismo lado. Con tu aporte mensual único, nos ayudás a crecer y a mantener vivas las instalaciones de nuestra segunda casa.
+        </p>
+    </header>
+
+    <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row">
+        
+        <div class="bg-gray-900 p-8 md:p-12 text-center flex flex-col justify-center md:w-2/5 relative">
+            <div class="absolute top-0 left-0 w-full h-1 bg-arbolito-amarillo"></div>
+            
+            <h2 class="text-2xl font-bold text-white uppercase mb-2">Socio Pleno</h2>
+            <p class="text-gray-400 text-sm mb-6 tracking-widest uppercase">Categoría Única</p>
+            
+            <div class="text-5xl font-extrabold text-arbolito-verde mb-8">
+                $8.000<span class="text-xl font-normal text-gray-500">/mes</span>
+            </div>
+            
+            <a href="{% url 'socios:hazte_socio' %}" class="w-full bg-arbolito-amarillo text-gray-900 font-bold uppercase py-3.5 rounded-lg hover:bg-yellow-400 transition-all shadow-md active:scale-95">
+                Quiero Asociarme
+            </a>
+        </div>
+
+        <div class="p-8 md:p-12 flex flex-col justify-center md:w-3/5">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 border-b border-gray-100 dark:border-gray-700 pb-3">
+                Beneficios de tu carnet
+            </h3>
+            
+            <ul class="space-y-5">
+                <li class="flex items-start">
+                    <svg class="w-6 h-6 text-arbolito-verde mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span class="text-gray-700 dark:text-gray-300">
+                        <strong class="text-gray-900 dark:text-white">Descuentos en entradas:</strong> Beneficio exclusivo para todos los partidos locales del club.
+                    </span>
+                </li>
+                
+                <li class="flex items-start">
+                    <svg class="w-6 h-6 text-arbolito-verde mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span class="text-gray-700 dark:text-gray-300">
+                        <strong class="text-gray-900 dark:text-white">Alquiler de espacios:</strong> Importante bonificación en el alquiler del salón y predio para tus eventos.
+                    </span>
+                </li>
+                
+                <li class="flex items-start opacity-70">
+                    <svg class="w-6 h-6 text-gray-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    <span class="text-gray-500 dark:text-gray-400 italic">
+                        Más beneficios a confirmar por la Comisión Directiva...
+                    </span>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+
+    <div class="mt-12 text-center text-sm text-gray-500 dark:text-gray-400 max-w-2xl mx-auto bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg">
+        <p>* Los medios de pago habilitados son: Efectivo en secretaría, Transferencia Bancaria y MercadoPago.</p>
+    </div>
+</main>
+{% endblock %}

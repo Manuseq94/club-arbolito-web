@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Todas las Noticias - Club Arbolito{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <header class="mb-12 text-center border-b border-gray-200 dark:border-gray-700 pb-6">
+        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white uppercase tracking-wider">
+            {% if request.GET.categoria %}
+                Noticias de {{ request.GET.categoria }}
+            {% else %}
+                Noticias del Club
+            {% endif %}
+        </h1>
+        <p class="mt-4 text-gray-500 dark:text-gray-400">
+            {% if request.GET.categoria %}
+                Toda la actualidad y novedades relacionadas a {{ request.GET.categoria }}.
+            {% else %}
+                Toda la actualidad, comunicados y novedades institucionales.
+            {% endif %}
+        </p>
+
+        {% if request.GET.categoria %}
+            <div class="mt-6">
+                <a href="{% url 'institucion:noticias_list' %}" class="inline-block border-2 border-arbolito-verde text-arbolito-verde hover:bg-arbolito-verde hover:text-white text-xs font-bold px-4 py-2 rounded-full transition-colors uppercase tracking-widest shadow-sm">
+                    Ver todas las noticias
+                </a>
+            </div>
+        {% endif %}
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for noticia in noticias %}
+            <article class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col hover:shadow-md transition-shadow">
+                
+                <div class="w-full h-48 bg-gray-200 dark:bg-gray-700 relative">
+                    {% if noticia.imagen_portada %}
+                        <img src="{{ noticia.imagen_portada.url }}" alt="{{ noticia.titulo }}" class="w-full h-full object-cover">
+                    {% else %}
+                        <div class="w-full h-full flex items-center justify-center">
+                            <span class="text-gray-400 font-bold tracking-widest opacity-50">ARBOLITO</span>
+                        </div>
+                    {% endif %}
+                    
+                    <span class="absolute top-4 left-4 bg-arbolito-verde text-white text-xs font-bold px-2 py-1 rounded shadow-sm">
+                        {{ noticia.categoria.nombre }}
+                    </span>
+                </div>
+
+                <div class="p-6 flex flex-col flex-grow">
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">{{ noticia.fecha_publicacion|date:"d M Y" }}</p>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white leading-tight mb-3">
+                        <a href="{% url 'institucion:noticia_detalle' noticia.id %}" class="hover:text-arbolito-verde dark:hover:text-arbolito-amarillo transition-colors">
+                            {{ noticia.titulo }}
+                        </a>
+                    </h2>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 flex-grow">
+                        {{ noticia.bajada|truncatechars:100 }}
+                    </p>
+                    
+                    <a href="{% url 'institucion:noticia_detalle' noticia.id %}" class="mt-4 text-arbolito-verde dark:text-arbolito-amarillo font-semibold text-sm hover:underline">
+                        Leer más →
+                    </a>
+                </div>
+            </article>
+        {% empty %}
+            <div class="col-span-full text-center py-12 text-gray-500">
+                Aún no hay noticias publicadas.
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if noticias.has_other_pages %}
+        <div class="mt-16 flex justify-center">
+            <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+                
+                {% if noticias.has_previous %}
+                    <a href="?page={{ noticias.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                        &laquo; Anterior
+                    </a>
+                {% else %}
+                    <span class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 text-sm font-medium text-gray-400 cursor-not-allowed">
+                        &laquo; Anterior
+                    </span>
+                {% endif %}
+
+                <span class="relative inline-flex items-center px-4 py-2 border-t border-b border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Página {{ noticias.number }} de {{ noticias.paginator.num_pages }}
+                </span>
+
+                {% if noticias.has_next %}
+                    <a href="?page={{ noticias.next_page_number }}" class="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                        Siguiente &raquo;
+                    </a>
+                {% else %}
+                    <span class="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 text-sm font-medium text-gray-400 cursor-not-allowed">
+                        Siguiente &raquo;
+                    </span>
+                {% endif %}
+                
+            </nav>
+        </div>
+    {% endif %}
+
+</main>
+{% endblock %}

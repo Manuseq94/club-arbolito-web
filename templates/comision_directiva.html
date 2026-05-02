@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Comisión Directiva - Club Atlético Arbolito{% endblock %}
+
+{% block content %}
+<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    
+    <header class="mb-16 text-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+            Comisión Directiva
+        </h1>
+        <div class="w-24 h-1 bg-arbolito-verde mx-auto rounded mb-6"></div>
+        <p class="text-sm font-bold text-arbolito-verde dark:text-arbolito-amarillo uppercase tracking-widest">
+            Club Atlético Arbolito
+        </p>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            Fundado el 21 de septiembre de 1950 • Sede: Beltrami 251, Coronel Vidal
+        </p>
+    </header>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 md:p-12">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-gray-200 dark:border-gray-700 pb-10 mb-10">
+            
+            <div class="text-center md:text-right md:border-r border-gray-200 dark:border-gray-700 md:pr-8">
+                <span class="text-xs font-bold text-arbolito-verde uppercase tracking-widest block mb-1">Presidente</span>
+                <h2 class="text-2xl font-extrabold text-gray-900 dark:text-white">Marianela Gonzalez</h2>
+            </div>
+            
+            <div class="text-center md:text-left md:pl-8">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-1">Vicepresidente</span>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Gastón Alonso</h2>
+            </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-gray-200 dark:border-gray-700 pb-10 mb-10">
+            <div class="text-center">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-1">Tesorero</span>
+                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200">Julián Etchegaray</h3>
+            </div>
+            <div class="text-center">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-1">Secretaria</span>
+                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200">Nohelia Contreras</h3>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
+            
+            <div class="space-y-6">
+                <div>
+                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-1">Vocal Titular</span>
+                    <p class="text-base font-semibold text-gray-800 dark:text-gray-200">Federico Filippi</p>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-1">Vocales Suplentes</span>
+                    <ul class="text-base font-medium text-gray-700 dark:text-gray-300 space-y-1">
+                        <li>Maximiliano Alonso</li>
+                        <li>Antonio Aguirre</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-1">Revisor de Cuenta Titular</span>
+                    <p class="text-base font-semibold text-gray-800 dark:text-gray-200">Nahuel Ponce</p>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-1">Revisor de Cuenta Suplente</span>
+                    <p class="text-base font-semibold text-gray-800 dark:text-gray-200">Santiago Beroldi</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+{% endblock %}
